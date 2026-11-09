@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loquendo Web - Sintetizador de Voz TTS Gratis y Premium</title>
+
+    <!-- SEO BÁSICO -->
+    <meta name="description" content="Generador de voz Loquendo online gratis. Convierte texto a voz (TTS) con voces en español, modulación de tono, velocidad y autenticación oficial de Discord.">
+    <meta name="keywords" content="loquendo, loquendo web, tts, text to speech, voz loquendo, jorge loquendo, discord oauth2, loquendo premium">
+    <meta name="author" content="Loquendo Web Ecosystem">
+    <link rel="canonical" href="https://loquendo.on-html.duckdns.org/">
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+
+    <!-- OPEN GRAPH / FACEBOOK / DISCORD / WHATSAPP PREVIEW -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://loquendo.on-html.duckdns.org/">
+    <meta property="og:title" content="Loquendo Web - Sintetizador de Voz TTS">
+    <meta property="og:description" content="Genera voz Loquendo gratis en línea. Conecta tu Discord con Loquendo OAuth2 y desbloquea funciones prémium sin bases de datos externas.">
+    <meta property="og:image" content="https://loquendo.on-html.duckdns.org/banner.svg">
+    <meta property="og:image:type" content="image/svg+xml">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- TWITTER CARD PREVIEW -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://loquendo.on-html.duckdns.org/">
+    <meta name="twitter:title" content="Loquendo Web - Sintetizador de Voz TTS">
+    <meta name="twitter:description" content="Convierte texto a voz con voces Loquendo online. Compatible con Discord OAuth2 y monetización nativa.">
+    <meta name="twitter:image" content="https://loquendo.on-html.duckdns.org/banner.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-glow {
+            background: radial-gradient(circle at center, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+        }
+        .voice-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+        .active-voice {
+            border-color: #06b6d4 !important;
+            background-color: rgba(6, 182, 212, 0.1) !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white font-sans min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+    <!-- NAVBAR -->
+    <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <img src="favicon.svg" alt="Loquendo Web Logo" class="w-10 h-10 rounded-xl shadow-lg shadow-cyan-500/20">
+            <div>
+                <span class="font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">LOQUENDO WEB</span>
+                <span class="text-[10px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-full ml-2 font-semibold">v2.0 PRO</span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <!-- DISCORD OAUTH STATUS -->
+            <div id="user-profile" class="hidden flex items-center gap-2 bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-1.5">
+                <img id="user-avatar" class="w-6 h-6 rounded-full border border-cyan-400" src="" alt="Avatar">
+                <span id="user-name" class="text-xs font-bold text-slate-200"></span>
+            </div>
+
+            <button id="discord-btn" onclick="loginConDiscord()" class="bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition text-xs shadow-lg shadow-indigo-500/20">
+                <i class="fa-brands fa-discord text-base"></i>
+                <span id="discord-btn-text">Iniciar Sesión con Discord</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-6 pt-24 pb-12 flex flex-col gap-6 relative">
+        <div class="absolute inset-0 gradient-glow pointer-events-none"></div>
+
+        <!-- APP HEADER CARD -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden backdrop-blur">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <h1 class="text-xl font-bold flex items-center gap-2 text-cyan-400">
+                        <i class="fa-solid fa-robot"></i> Estación de Síntesis de Voz Loquendo
+                    </h1>
+                    <p class="text-xs text-slate-400 mt-1">Generador TTS independiente optimizado con múltiples modulaciones de tono y velocidad.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span id="badge-status" class="bg-slate-800 text-slate-400 border border-slate-700 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-slate-500"></span> Modo Estándar
+                    </span>
+                    <a href="https://discord.gg/" target="_blank" class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-bold hover:bg-amber-500/20 transition flex items-center gap-1">
+                        <i class="fa-solid fa-crown text-xs"></i> Loquendo Premium
+                    </a>
+                </div>
+            </div>
+
+            <!-- CONTROLES DE TEXTO -->
+            <div class="space-y-4 mt-6">
+                <div class="flex justify-between items-center">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-align-left text-cyan-500"></i> Texto a Convertir
+                    </label>
+                    <span id="char-counter" class="text-xs text-slate-500">0 / 500 caracteres</span>
+                </div>
+                <textarea id="tts-input" rows="4" maxlength="500" placeholder="Escribe aquí el texto para ser sintetizado por la voz de Loquendo..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm focus:outline-none focus:border-cyan-500 transition resize-none placeholder:text-slate-600"></textarea>
+
+                <!-- SELECCIÓN DE VOCES (GRID MEJORADO) -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-microphone text-cyan-500"></i> Catálogo de Voces Loquendo / TTS
+                    </label>
+                    <div id="voices-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        <!-- Las voces se detectan y cargan dinámicamente vía JavaScript -->
+                    </div>
+                </div>
+
+                <!-- SLIDERS DE CONTROL (PITCH & SPEED) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-950/60 border border-slate-800/80 p-4 rounded-xl">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs font-bold">
+                            <span class="text-slate-400"><i class="fa-solid fa-gauge-high text-cyan-400 mr-1"></i> Velocidad (Rate)</span>
+                            <span id="rate-val" class="text-cyan-400">1.0x</span>
+                        </div>
+                        <input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1" class="w-full accent-cyan-500 bg-slate-800 rounded">
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs font-bold">
+                            <span class="text-slate-400"><i class="fa-solid fa-sliders text-cyan-400 mr-1"></i> Tono (Pitch)</span>
+                            <span id="pitch-val" class="text-cyan-400">1.0</span>
+                        </div>
+                        <input type="range" id="tts-pitch" min="0.5" max="1.5" step="0.1" value="1" class="w-full accent-cyan-500 bg-slate-800 rounded">
+                    </div>
+                </div>
+
+                <!-- ACCIONES DE REPRODUCCIÓN -->
+                <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                    <button onclick="reproducirLoquendo()" class="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-sm py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 active:scale-95">
+                        <i class="fa-solid fa-play text-base"></i> Generar y Hablar
+                    </button>
+                    <button onclick="detenerLoquendo()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold text-sm py-3 px-5 rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-stop"></i> Detener
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER LEGAL INDEPENDIENTE -->
+    <footer class="bg-slate-950 border-t border-slate-800 px-6 py-4 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-2">
+        <div>© 2026 Loquendo Web Ecosystem. Autenticación oficial vía Discord OAuth2.</div>
+        <div class="flex gap-6">
+            <a href="privacy.html" class="hover:text-cyan-400 transition flex items-center gap-1">
+                <i class="fa-solid fa-shield-halved text-slate-600"></i> Política de Privacidad
+            </a>
+            <a href="terms.html" class="hover:text-cyan-400 transition flex items-center gap-1">
+                <i class="fa-solid fa-file-contract text-slate-600"></i> Términos de Servicio
+            </a>
+        </div>
+    </footer>
+
+    <!-- SCRIPT JS PRO MEJORADO -->
+    <script>
+        const CLIENT_ID = 'TU_CLIENT_ID_LOQUENDO_OAUTH';
+        const REDIRECT_URI = window.location.origin + window.location.pathname;
+
+        let selectedVoiceIndex = 0;
+        let availableVoices = [];
+
+        // Contador de caracteres
+        const ttsInput = document.getElementById('tts-input');
+        const charCounter = document.getElementById('char-counter');
+        ttsInput.addEventListener('input', () => {
+            charCounter.innerText = `${ttsInput.value.length} / 500 caracteres`;
+        });
+
+        // Sliders
+        const rateInput = document.getElementById('tts-rate');
+        const pitchInput = document.getElementById('tts-pitch');
+        rateInput.addEventListener('input', (e) => document.getElementById('rate-val').innerText = e.target.value + 'x');
+        pitchInput.addEventListener('input', (e) => document.getElementById('pitch-val').innerText = e.target.value);
+
+        // Cargar voces reales del navegador
+        function cargarVoces() {
+            availableVoices = window.speechSynthesis.getVoices();
+            const container = document.getElementById('voices-container');
+            container.innerHTML = '';
+
+            if (availableVoices.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-xs text-slate-500 italic">Cargando catálogo de voces...</div>';
+                return;
+            }
+
+            const esVoices = availableVoices.filter(v => v.lang.startsWith('es'));
+            const displayList = esVoices.length > 0 ? esVoices : availableVoices.slice(0, 6);
+
+            displayList.forEach((voice, idx) => {
+                const card = document.createElement('div');
+                card.className = `voice-card bg-slate-950 border border-slate-800 p-3 rounded-xl cursor-pointer transition flex items-center justify-between ${idx === 0 ? 'active-voice' : ''}`;
+                card.onclick = () => seleccionarVoz(idx, card);
+                
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 font-bold text-xs">
+                            ${voice.lang.substring(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-slate-200 truncate max-w-[140px]">${voice.name}</div>
+                            <div class="text-[10px] text-slate-500">${voice.lang}</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-cyan-400 text-xs ${idx === 0 ? 'block' : 'hidden'} check-icon"></i>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function seleccionarVoz(index, element) {
+            selectedVoiceIndex = index;
+            document.querySelectorAll('.voice-card').forEach(c => {
+                c.classList.remove('active-voice');
+                c.querySelector('.check-icon').classList.add('hidden');
+            });
+            element.classList.add('active-voice');
+            element.querySelector('.check-icon').classList.remove('hidden');
+        }
+
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = cargarVoces;
+        }
+
+        function reproducirLoquendo() {
+            const texto = ttsInput.value;
+            if(!texto) return;
+
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(texto);
+            
+            if (availableVoices.length > 0) {
+                const esVoices = availableVoices.filter(v => v.lang.startsWith('es'));
+                const list = esVoices.length > 0 ? esVoices : availableVoices;
+                utterance.voice = list[selectedVoiceIndex] || list[0];
+            }
+
+            utterance.rate = parseFloat(rateInput.value);
+            utterance.pitch = parseFloat(pitchInput.value);
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function detenerLoquendo() {
+            window.speechSynthesis.cancel();
+        }
+
+        function loginConDiscord() {
+            const authUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+            window.location.href = authUrl;
+        }
+
+        function verificarTokenDiscord() {
+            const fragment = new URLSearchParams(window.location.hash.slice(1));
+            const accessToken = fragment.get('access_token');
+
+            if (accessToken) {
+                fetch('https://discord.com/api/v10/users/@me', {
+                    headers: { authorization: `Bearer ${accessToken}` }
+                })
+                .then(res => res.json())
+                .then(user => {
+                    document.getElementById('discord-btn').classList.add('hidden');
+                    document.getElementById('user-profile').classList.remove('hidden');
+                    document.getElementById('user-name').innerText = user.username;
+                    if(user.avatar) {
+                        document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    }
+                    document.getElementById('badge-status').innerHTML = `<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> Usuario Verificado`;
+                    document.getElementById('badge-status').className = 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1.5';
+                })
+                .catch(err => console.error(err));
+            }
+            cargarVoces();
+        }
+
+        window.onload = verificarTokenDiscord;
+    </script>
+</body>
+</html>

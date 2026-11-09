@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /#access_token=
+
+Sitemap: https://loquendo.on-html.duckdns.org/sitemap.xml
+Sitemap: https://loquendo.on-html.duckdns.org/sitemaps.xml

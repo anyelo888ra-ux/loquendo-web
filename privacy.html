@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - Loquendo Web</title>
+    <meta name="description" content="Política de Privacidad de Loquendo Web. Autenticación transparente mediante Discord OAuth2 sin bases de datos externas.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- OPEN GRAPH -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Política de Privacidad - Loquendo Web">
+    <meta property="og:description" content="Información detallada sobre el tratamiento de datos y privacidad en Loquendo Web.">
+    <meta property="og:image" content="https://loquendo.on-html.duckdns.org/banner.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans p-6 max-w-4xl mx-auto space-y-6">
+    <header class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <img src="favicon.svg" alt="Loquendo Web" class="w-8 h-8 rounded-lg">
+            <div>
+                <h1 class="text-2xl font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-cyan-400"></i> Política de Privacidad
+                </h1>
+                <p class="text-xs text-slate-500 mt-0.5">Exclusivo para Loquendo Web Ecosystem & Discord Bots</p>
+            </div>
+        </div>
+        <span class="bg-slate-900 border border-slate-800 text-xs text-slate-400 px-3 py-1 rounded-full">Actualizado: Nov 2026</span>
+    </header>
+
+    <section class="space-y-6 text-sm leading-relaxed">
+        <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-xl space-y-2">
+            <h2 class="text-base font-bold text-cyan-400 flex items-center gap-2">
+                <i class="fa-solid fa-database"></i> 1. Datos Recopilados y Sin Base de Datos Externa
+            </h2>
+            <p>La plataforma <strong>Loquendo Web</strong> opera bajo un modelo sin almacenamiento persistente ni base de datos externa. Al utilizar el sistema de autenticación <strong>Discord OAuth2 (loquendo oauth)</strong>, únicamente leemos en tiempo real desde la API de Discord:</p>
+            <ul class="list-disc pl-5 space-y-1 text-slate-400">
+                <li>ID único público de usuario de Discord.</li>
+                <li>Nombre de usuario y fotografía de perfil (avatar).</li>
+                <li>Estado de derechos de suscripción prémium (Entitlements) gestionados nativamente por Discord.</li>
+            </ul>
+        </div>
+
+        <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-xl space-y-2">
+            <h2 class="text-base font-bold text-cyan-400 flex items-center gap-2">
+                <i class="fa-solid fa-sliders"></i> 2. Procesamiento de Voz y Almacenamiento Local
+            </h2>
+            <p>Todo el texto ingresado en la interfaz para la síntesis de voz (Text-to-Speech) se procesa de forma directa e instantánea en la sesión de tu navegador mediante las Web Speech APIs o las voces integradas de la plataforma. No guardamos ni grabamos los audios o textos generados.</p>
+        </div>
+
+        <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-xl space-y-2">
+            <h2 class="text-base font-bold text-cyan-400 flex items-center gap-2">
+                <i class="fa-brands fa-discord"></i> 3. Integración con Discord Inc.
+            </h2>
+            <p>Toda la gestión de la identidad y de pagos para la aplicación prémium (<strong>loquendo premium</strong>) se realiza de forma directa mediante la API de Discord Inc. No compartimos, vendemos ni transferimos información a terceros.</p>
+        </div>
+    </section>
+
+    <footer class="pt-6 border-t border-slate-800 flex justify-between items-center">
+        <a href="index.html" class="bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-800 text-xs px-4 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> Volver a Loquendo Web
+        </a>
+        <span class="text-xs text-slate-600">Loquendo Web Privacy Policy</span>
+    </footer>
+</body>
+</html>
